@@ -1,1 +1,137 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
+//Colors
+$light: #FDFFFC;
+$dark: #011627;
+$link: #B91372;
+$btn: #FF0022;
+$light-alt: #41EAD4;
+
+//Helpers
+$default-radius: 5px;
+@mixin border($radius, $props: none) {
+  box-sizing: border-box;
+  border: $props;
+  border-radius: $radius;
+}
+
+@mixin flex($direction: row, $justify-content: flex-start, $wrap: nowrap, $align-items: stretch, $align-content: stretch) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  flex-wrap: $wrap;
+  align-items: $align-items;
+  align-content: $align-content;
+}
+
+body, input {
+  font-family: 'Josefin Sans', sans-serif;
+  background: $light;
+}
+
+//12 row grid
+@mixin row($direction, $min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    .row {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: $direction;
+      align-items: baseline;
+    }
+  }
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    width: $i / 12 * 100%;
+    padding: 0.5em;
+    margin: 0.2em;
+  }
+}
+
+
+@include row(column, 0px, 400px);
+@include row(row, 401px, 1200px);
+
+//Links
+a {
+  color: $link;
+}
+
+//Buttons
+.btn {
+  padding: 0.5em;
+  background: $btn;
+  color: $light;
+  text-transform: uppercase;
+  @include border($radius: $default-radius);
+}
+
+.btn-lg {
+  font-size: 100%;
+}
+
+.textbox {
+  font-size: 100%;
+  padding: 0.5em;
+  border-radius: 5px;
+  width: 100%;
+  @include border($props: 2px solid $light-alt, $radius: $default-radius);
+}
+
+//Cards
+.card {
+  cursor: pointer;
+  @include flex($direction: column);
+  max-width: 185px;
+  max-height: 300px;
+  * { overflow: hidden; }
+  box-shadow: 1px 1px 4px rgba(1, 22, 39, 0.4);
+  padding-bottom: 1em;
+  @include border($radius: 5px);
+
+  div {
+    padding: 5px;
+  }
+
+  .image {
+    margin: 0; padding: 0;
+    height: 278px;
+    //max-height: 100px;
+    position: relative;
+    border-radius: 5px 5px 0 0;
+
+    img {
+      position: absolute;
+      top: -139px;
+      //width: 100%;
+    }
+  }
+
+  .title {
+    text-align: center;
+    overflow: unset;
+  }
+
+  .attributes {
+    overflow: unset;
+  }
+
+  .attributes > .inline {
+    @include flex($justify-content: space-around);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      display: block;
+      font-size: 75%;
+      padding: 3px;
+      background: $light-alt;
+      @include border($radius: 2px);
+    }
+  }
+}
