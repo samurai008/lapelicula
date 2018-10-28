@@ -26,20 +26,55 @@ $default-radius: 5px;
   align-content: $align-content;
 }
 
+.element-center {
+  margin: 0 auto;
+}
+
 body, input {
   font-family: 'Josefin Sans', sans-serif;
   background: $light;
+  font-weight: 200;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+//Container
+@media (max-width: 525px){
+  .container {
+    width: 100%;
+    padding: 0.2em;
+  }
+}
+
+@media (min-width: 526px) {
+  .container {
+    max-width: 700px;
+    padding: 0.5em;
+  }
+}
+
+@mixin w-100 {
+  width: 100%;
 }
 
 //12 row grid
-@mixin row($direction, $min, $max) {
-  @media (min-width: $min) and (max-width: $max) {
+@mixin row($direction, $min) {
+  @media (min-width: $min) {
     .row {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: $direction;
-      align-items: baseline;
+      @include w-100;
+      @include flex($direction: $direction, $wrap: wrap, $align-items: baseline);
+    }
+
+    .row-flex-start {
+      @include w-100;
+      @include flex($wrap: wrap, $align-items: flex-start);
+    }
+
+    .row-align-items-center{
+      @include w-100;
+      @include flex($wrap: wrap, $align-items: center);
     }
   }
 }
@@ -48,17 +83,21 @@ body, input {
   .col-#{$i} {
     width: $i / 12 * 100%;
     padding: 0.5em;
-    margin: 0.2em;
   }
 }
 
 
-@include row(column, 0px, 400px);
-@include row(row, 401px, 1200px);
+@include row(column, 0px);
+@include row(row, 526px);
 
 //Links
 a {
   color: $link;
+}
+
+//Forms
+form {
+  width: inherit;
 }
 
 //Buttons
@@ -72,8 +111,10 @@ a {
 
 .btn-lg {
   font-size: 100%;
+  @include w-100;
 }
 
+//Textbox
 .textbox {
   font-size: 100%;
   padding: 0.5em;
@@ -133,5 +174,19 @@ a {
       background: $light-alt;
       @include border($radius: 2px);
     }
+  }
+}
+
+.list-no-style {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  & > li {
+    &:first-child {
+      margin-top: 0 !important;
+    }
+
+    margin: 1em 0;
   }
 }
